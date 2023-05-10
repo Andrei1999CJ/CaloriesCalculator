@@ -1,6 +1,10 @@
-package coj.and.CaloriesCalculator;
+package coj.and.CaloriesCalculator.useraccounts;
 
+import coj.and.CaloriesCalculator.useraliments.UserAliments;
+import coj.and.CaloriesCalculator.userstats.UserStats;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
@@ -17,6 +21,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @EqualsAndHashCode
+@ToString
 public class UserAccounts {
 
     @Id
@@ -25,12 +30,15 @@ public class UserAccounts {
     @Column(name = "UUID", nullable = false, columnDefinition = "UUID")
     private UUID uuid;
     @Column(name = "first_name", nullable = false, columnDefinition = "TEXT")
+    @NotBlank(message = "We have an error")
     private String firstName;
     @Column(name = "last_name", nullable = false, columnDefinition = "TEXT")
     private String lastName;
     @Column(name = "password", nullable = false, columnDefinition = "TEXT")
     private String password;
     @Column(name = "email", nullable = false, columnDefinition = "TEXT")
+    @NotBlank(message = "We have an error")
+    @Email(message = "We have an error")
     private String email;
     @Column(name = "gender", nullable = false, columnDefinition = "TEXT CHECK(gender IN('MALE', 'FEMALE'))")
     @Enumerated(EnumType.STRING)

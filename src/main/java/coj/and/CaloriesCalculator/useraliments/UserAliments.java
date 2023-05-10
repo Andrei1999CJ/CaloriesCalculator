@@ -1,5 +1,7 @@
-package coj.and.CaloriesCalculator;
+package coj.and.CaloriesCalculator.useraliments;
 
+import coj.and.CaloriesCalculator.useraccounts.UserAccounts;
+import coj.and.CaloriesCalculator.aliments.Aliments;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -1,5 +1,14 @@
 package coj.and.CaloriesCalculator;
 
+
+import coj.and.CaloriesCalculator.exception.NotFoundException;
+import coj.and.CaloriesCalculator.useraccounts.UserAccounts;
+import coj.and.CaloriesCalculator.useraccounts.UserAccountsRepository;
+import coj.and.CaloriesCalculator.aliments.Aliments;
+import coj.and.CaloriesCalculator.aliments.AlimentsRepository;
+import coj.and.CaloriesCalculator.userstats.UserStats;
+import coj.and.CaloriesCalculator.userstats.UserStatsRequestDto;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,7 +29,7 @@ public class CaloriesCalculatorApplication {
 		SpringApplication.run(CaloriesCalculatorApplication.class, args);
 	}
 	@PostMapping(path = "/user")
-	public void addUser(@RequestBody UserAccounts userAccounts) {
+	public void addUser(@Valid @RequestBody UserAccounts userAccounts) {
 		userAccounts.setUserStats(new UserStats(userAccounts, 0.0, 0.0, 0.0, 0.0, 0.0));
 		userAccountsRepository.save(userAccounts);
 	}
@@ -29,9 +38,10 @@ public class CaloriesCalculatorApplication {
 		alimentsRepository.save(aliments);
 	}
 	@GetMapping(path = "/user/{userEmail}")
-	public Optional<UUID> getUser(@PathVariable(name = "userEmail") String email) {
-		return userAccountsRepository.getUUIDByEmail(email);
+	public UUID getUser( @PathVariable(name = "userEmail") String email) {
+		return userAccountsRepository.getUUIDByEmail(email).orElseThrow(() -> new NotFoundException("Aici e buba"));
 	}
+
 	@GetMapping(path = "/userStats/{userEmail}")
 	public UserStatsRequestDto getUserStats(@PathVariable(name = "userEmail") String email) {
 		UserAccounts userAccounts = userAccountsRepository.getUserByEmail(email).orElse(null);
