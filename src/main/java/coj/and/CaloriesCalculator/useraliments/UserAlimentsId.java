@@ -1,4 +1,4 @@
-package coj.and.CaloriesCalculator;
+package coj.and.CaloriesCalculator.useraliments;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

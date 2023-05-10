@@ -1,6 +1,10 @@
 server:
   port: 8080
   name: CaloriesCalculator
+  error:
+    include-message: always
+    include-binding: always
+    include-stacktrace: never
 
 spring:
   datasource:
