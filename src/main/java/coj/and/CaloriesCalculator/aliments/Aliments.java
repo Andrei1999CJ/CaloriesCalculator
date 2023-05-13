@@ -2,6 +2,8 @@ package coj.and.CaloriesCalculator.aliments;
 
 import coj.and.CaloriesCalculator.useraliments.UserAliments;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -23,16 +25,22 @@ public class Aliments {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "aliments_id_generator")
     private Long id;
     @Column(name = "name", nullable = false, columnDefinition = "TEXT")
+    @NotBlank(message = "Name should not be blank")
     private String name;
     @Column(name = "calories", nullable = false, columnDefinition = "REAL")
+    @Min(value = 0, message = "Calories should not be negative")
     private Double calories;
     @Column(name = "protein", nullable = false, columnDefinition = "REAL")
+    @Min(value = 0, message = "Protein should not be negative")
     private Double protein;
     @Column(name = "carbs", nullable = false, columnDefinition = "REAL")
+    @Min(value = 0, message = "Carbs should not be negative")
     private Double carbs;
     @Column(name = "fat", nullable = false, columnDefinition = "REAL")
+    @Min(value = 0, message = "Fat should not be negative")
     private Double fat;
     @Column(name = "fiber", nullable = false, columnDefinition = "REAL")
+    @Min(value = 0, message = "Fiber should not be negative")
     private Double fiber;
     @OneToMany(mappedBy = "aliments", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserAliments> userAliments = new ArrayList<UserAliments>();
