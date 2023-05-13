@@ -21,7 +21,6 @@ import java.util.UUID;
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString
 public class UserAccounts {
 
     @Id
@@ -56,5 +55,34 @@ public class UserAccounts {
 
     public void removeUserAliment(UserAliments userAliment) {
         userAliments.remove(userAliment);
+    }
+
+    public UserAccounts(String firstName, String lastName, String password, String email, Gender gender, UserStats userStats) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.email = email;
+        this.gender = gender;
+        this.userStats = userStats;
+    }
+
+    public UserAccounts(String firstName, String lastName, String password, String email, Gender gender) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.email = email;
+        this.gender = gender;
+    }
+
+    @Override
+    public String toString() {
+        return "UserAccounts{" +
+                "uuid=" + uuid +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", gender=" + gender +
+                '}';
     }
 }

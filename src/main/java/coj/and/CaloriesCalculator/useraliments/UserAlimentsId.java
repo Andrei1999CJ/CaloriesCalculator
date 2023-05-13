@@ -1,14 +1,15 @@
 package coj.and.CaloriesCalculator.useraliments;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.UUID;
 
 @Embeddable
-@AllArgsConstructor
+@Setter
+@Getter
+@NoArgsConstructor
 @EqualsAndHashCode
 public class UserAlimentsId implements Serializable {
 
@@ -16,4 +17,9 @@ public class UserAlimentsId implements Serializable {
     private UUID userAccountsId;
     @Column(name = "aliments_id")
     private Long alimentsId;
+
+    public UserAlimentsId(UUID userAccountsId, Long alimentsId) {
+        this.userAccountsId = userAccountsId;
+        this.alimentsId = alimentsId;
+    }
 }
