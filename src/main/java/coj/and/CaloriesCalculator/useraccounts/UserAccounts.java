@@ -29,15 +29,17 @@ public class UserAccounts {
     @Column(name = "UUID", nullable = false, columnDefinition = "UUID")
     private UUID uuid;
     @Column(name = "first_name", nullable = false, columnDefinition = "TEXT")
-    @NotBlank(message = "We have an error")
+    @NotBlank(message = "First name should not be blank")
     private String firstName;
     @Column(name = "last_name", nullable = false, columnDefinition = "TEXT")
+    @NotBlank(message = "Last name should not be blank")
     private String lastName;
     @Column(name = "password", nullable = false, columnDefinition = "TEXT")
+    @NotBlank(message = "Password should not be empty")
     private String password;
     @Column(name = "email", nullable = false, columnDefinition = "TEXT")
-    @NotBlank(message = "We have an error")
-    @Email(message = "We have an error")
+    @NotBlank(message = "Email should not be empty")
+    @Email(message = "This is not an email")
     private String email;
     @Column(name = "gender", nullable = false, columnDefinition = "TEXT CHECK(gender IN('MALE', 'FEMALE'))")
     @Enumerated(EnumType.STRING)
