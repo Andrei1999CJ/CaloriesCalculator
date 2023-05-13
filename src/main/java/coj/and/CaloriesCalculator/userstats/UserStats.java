@@ -10,7 +10,6 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 @EqualsAndHashCode
 public class UserStats {
     @Id
@@ -31,4 +30,24 @@ public class UserStats {
     private Double fat;
     @Column(name = "fiber", nullable = false, columnDefinition = "REAL")
     private Double fiber;
+
+    public UserStats(Double calories, Double protein, Double carbs, Double fat, Double fiber) {
+        this.calories = calories;
+        this.protein = protein;
+        this.carbs = carbs;
+        this.fat = fat;
+        this.fiber = fiber;
+    }
+
+    @Override
+    public String toString() {
+        return "UserStats{" +
+                "userAccounts=" + userAccounts +
+                ", calories=" + calories +
+                ", protein=" + protein +
+                ", carbs=" + carbs +
+                ", fat=" + fat +
+                ", fiber=" + fiber +
+                '}';
+    }
 }

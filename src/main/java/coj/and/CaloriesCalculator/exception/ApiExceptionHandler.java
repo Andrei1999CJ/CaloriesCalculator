@@ -18,6 +18,12 @@ public class ApiExceptionHandler {
     @ExceptionHandler(value = NotFoundException.class)
     public ResponseEntity<Object> handleApiExceptions(NotFoundException e) {
         ApiException apiException = new ApiException(e.getMessage(), HttpStatus.NOT_FOUND, ZonedDateTime.now());
-        return new ResponseEntity<>(apiException, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(apiException, apiException.getHttpStatus());
+    }
+
+    @ExceptionHandler(value = AlreadyExistsException.class)
+    public ResponseEntity<Object> handleApiExceptions(AlreadyExistsException e) {
+        ApiException apiException = new ApiException(e.getMessage(), HttpStatus.CONFLICT, ZonedDateTime.now());
+        return new ResponseEntity<>(apiException, apiException.getHttpStatus());
     }
 }

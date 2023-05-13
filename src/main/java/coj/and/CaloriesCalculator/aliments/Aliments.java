@@ -36,4 +36,13 @@ public class Aliments {
     private Double fiber;
     @OneToMany(mappedBy = "aliments", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserAliments> userAliments = new ArrayList<UserAliments>();
+
+    public Aliments(String name, Double calories, Double protein, Double carbs, Double fat, Double fiber) {
+        this.name = name;
+        this.calories = calories;
+        this.protein = protein;
+        this.carbs = carbs;
+        this.fat = fat;
+        this.fiber = fiber;
+    }
 }
