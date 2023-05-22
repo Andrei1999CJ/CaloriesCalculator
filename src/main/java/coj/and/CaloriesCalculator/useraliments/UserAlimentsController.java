@@ -1,5 +1,6 @@
 package coj.and.CaloriesCalculator.useraliments;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +17,13 @@ public class UserAlimentsController {
     }
 
     @PostMapping
-    public void addUserAliment(@RequestBody UserAlimentsRequestDto userAlimentsRequestDto) {
+    public void addUserAliment(@Valid @RequestBody UserAlimentsRequestDto userAlimentsRequestDto) {
         userAlimentsService.addUserAlimentByUserEmailAndAlimentName(userAlimentsRequestDto);
+    }
+
+    @PutMapping
+    public void updateUserAliment(@Valid @RequestBody UserAlimentsRequestDto userAlimentsRequestDto) {
+        userAlimentsService.addUserAlimentQuantityByUserEmailAndAlimentName(userAlimentsRequestDto);
     }
 
     @DeleteMapping(path = "/all/{email}")
