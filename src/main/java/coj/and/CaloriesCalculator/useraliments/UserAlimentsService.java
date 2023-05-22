@@ -8,6 +8,7 @@ import coj.and.CaloriesCalculator.useraccounts.UserAccountsService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class UserAlimentsService {
                     throw new NotFoundException("This aliment is not consumed");
         });
         addCaloriesAndMacros(userAlimentsRequestDto.quantity(), userAliment.getUserAccounts(), userAliment.getAliments());
-        userAliment.setQuantity(userAliment.getQuantity() + userAlimentsRequestDto.quantity());
+        userAliment.setQuantity(userAlimentsRequestDto.quantity().add(userAliment.getQuantity()));
         userAlimentsRepository.save(userAliment);
     }
 
@@ -59,20 +60,20 @@ public class UserAlimentsService {
 
     public void removeUserAlimentsByUserEmail(String email) {
         UserAccounts userAccounts = userAccountsService.getUserByUserEmail(email);
-        userAccounts.getUserStats().setCalories(0.0);
-        userAccounts.getUserStats().setProtein(0.0);
-        userAccounts.getUserStats().setCarbs(0.0);
-        userAccounts.getUserStats().setFat(0.0);
-        userAccounts.getUserStats().setFiber(0.0);
+        userAccounts.getUserStats().setCalories(BigDecimal.valueOf(0.0));
+        userAccounts.getUserStats().setProtein(BigDecimal.valueOf(0.0));
+        userAccounts.getUserStats().setCarbs(BigDecimal.valueOf(0.0));
+        userAccounts.getUserStats().setFat(BigDecimal.valueOf(0.0));
+        userAccounts.getUserStats().setFiber(BigDecimal.valueOf(0.0));
         userAlimentsRepository.deleteAllUserAlimentsByUserId(userAccounts.getUuid());
     }
 
-    private static void addCaloriesAndMacros(Double quantity, UserAccounts userAccounts, Aliments aliments) {
-        double newCalories = userAccounts.getUserStats().getCalories() + quantity * aliments.getCalories();
-        double newProtein = userAccounts.getUserStats().getProtein() + quantity * aliments.getProtein();
-        double newCarbs = userAccounts.getUserStats().getCarbs() + quantity * aliments.getCarbs();
-        double newFat = userAccounts.getUserStats().getFat() + quantity * aliments.getFat();
-        double newFiber = userAccounts.getUserStats().getFiber() + quantity * aliments.getFiber();
+    private static void addCaloriesAndMacros(BigDecimal quantity, UserAccounts userAccounts, Aliments aliments) {
+        BigDecimal newCalories = quantity.multiply(aliments.getCalories()).add(userAccounts.getUserStats().getCalories());
+        BigDecimal newProtein = quantity.multiply(aliments.getProtein()).add(userAccounts.getUserStats().getProtein());
+        BigDecimal newCarbs = quantity.multiply(aliments.getCarbs()).add(userAccounts.getUserStats().getCarbs());
+        BigDecimal newFat = quantity.multiply(aliments.getFat()).add(userAccounts.getUserStats().getFat());
+        BigDecimal newFiber = quantity.multiply(aliments.getFiber()).add(userAccounts.getUserStats().getFiber());
         userAccounts.getUserStats().setCalories(newCalories);
         userAccounts.getUserStats().setProtein(newProtein);
         userAccounts.getUserStats().setCarbs(newCarbs);
@@ -80,12 +81,12 @@ public class UserAlimentsService {
         userAccounts.getUserStats().setFiber(newFiber);
     }
 
-    private static void subtractCaloriesAndMacros(Double quantity, UserAccounts userAccounts, Aliments aliments) {
-        double newCalories = userAccounts.getUserStats().getCalories() - quantity * aliments.getCalories();
-        double newProtein = userAccounts.getUserStats().getProtein() - quantity * aliments.getProtein();
-        double newCarbs = userAccounts.getUserStats().getCarbs() - quantity * aliments.getCarbs();
-        double newFat = userAccounts.getUserStats().getFat() - quantity * aliments.getFat();
-        double newFiber = userAccounts.getUserStats().getFiber() - quantity * aliments.getFiber();
+    private static void subtractCaloriesAndMacros(BigDecimal quantity, UserAccounts userAccounts, Aliments aliments) {
+        BigDecimal newCalories = quantity.multiply(aliments.getCalories()).subtract(userAccounts.getUserStats().getCalories());
+        BigDecimal newProtein = quantity.multiply(aliments.getProtein()).subtract(userAccounts.getUserStats().getProtein());
+        BigDecimal newCarbs = quantity.multiply(aliments.getCarbs()).subtract(userAccounts.getUserStats().getCarbs());
+        BigDecimal newFat = quantity.multiply(aliments.getFat()).subtract(userAccounts.getUserStats().getFat());
+        BigDecimal newFiber = quantity.multiply(aliments.getFiber()).subtract(userAccounts.getUserStats().getFiber());
         userAccounts.getUserStats().setCalories(newCalories);
         userAccounts.getUserStats().setProtein(newProtein);
         userAccounts.getUserStats().setCarbs(newCarbs);

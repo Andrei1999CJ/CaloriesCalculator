@@ -4,6 +4,8 @@ import coj.and.CaloriesCalculator.useraccounts.UserAccounts;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Entity(name = "UserStats")
 @Table(name = "user_stats")
 @AllArgsConstructor
@@ -21,17 +23,17 @@ public class UserStats {
     )
     private UserAccounts userAccounts;
     @Column(name = "calories", nullable = false, columnDefinition = "REAL")
-    private Double calories;
+    private BigDecimal calories;
     @Column(name = "protein", nullable = false, columnDefinition = "REAL")
-    private Double protein;
+    private BigDecimal protein;
     @Column(name = "carbs", nullable = false, columnDefinition = "REAL")
-    private Double carbs;
+    private BigDecimal carbs;
     @Column(name = "fat", nullable = false, columnDefinition = "REAL")
-    private Double fat;
+    private BigDecimal fat;
     @Column(name = "fiber", nullable = false, columnDefinition = "REAL")
-    private Double fiber;
+    private BigDecimal fiber;
 
-    public UserStats(Double calories, Double protein, Double carbs, Double fat, Double fiber) {
+    public UserStats(BigDecimal calories, BigDecimal protein, BigDecimal carbs, BigDecimal fat, BigDecimal fiber) {
         this.calories = calories;
         this.protein = protein;
         this.carbs = carbs;

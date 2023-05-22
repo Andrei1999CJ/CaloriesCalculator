@@ -1,4 +1,6 @@
 package coj.and.CaloriesCalculator.useraliments;
 
-public record UserAlimentsRequestDto(String email, String alimentName, Double quantity) {
+import java.math.BigDecimal;
+
+public record UserAlimentsRequestDto(String email, String alimentName, BigDecimal quantity) {
 }

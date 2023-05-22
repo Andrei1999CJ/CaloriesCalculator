@@ -1,4 +1,6 @@
 package coj.and.CaloriesCalculator.userstats;
 
-public record UserStatsRequestDto(Double calories, Double protein, Double carbs, Double fat, Double fiber) {
+import java.math.BigDecimal;
+
+public record UserStatsRequestDto(BigDecimal calories, BigDecimal protein, BigDecimal carbs, BigDecimal fat, BigDecimal fiber) {
 }

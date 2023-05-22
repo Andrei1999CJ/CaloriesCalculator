@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Entity(name = "UserAliments")
 @Table(name = "user_aliments")
 @NoArgsConstructor
@@ -31,9 +33,9 @@ public class UserAliments {
     private Aliments aliments;
     @Min(value = 0)
     @Column(name = "quantity", nullable = false, columnDefinition = "REAL")
-    private Double quantity;
+    private BigDecimal quantity;
 
-    public UserAliments(UserAlimentsId userAlimentsId, Double quantity) {
+    public UserAliments(UserAlimentsId userAlimentsId, BigDecimal quantity) {
         this.userAlimentsId = userAlimentsId;
         this.quantity = quantity;
     }
@@ -47,13 +49,13 @@ public class UserAliments {
         this.aliments = aliments;
     }
 
-    public UserAliments(UserAccounts userAccounts, Aliments aliments, Double quantity) {
+    public UserAliments(UserAccounts userAccounts, Aliments aliments, BigDecimal quantity) {
         this.userAccounts = userAccounts;
         this.aliments = aliments;
         this.quantity = quantity;
     }
 
-    public UserAliments(UserAlimentsId userAlimentsId, UserAccounts userAccounts, Aliments aliments, Double quantity) {
+    public UserAliments(UserAlimentsId userAlimentsId, UserAccounts userAccounts, Aliments aliments, BigDecimal quantity) {
         this.userAlimentsId = userAlimentsId;
         this.userAccounts = userAccounts;
         this.aliments = aliments;
