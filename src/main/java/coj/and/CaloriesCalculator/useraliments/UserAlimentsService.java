@@ -28,17 +28,29 @@ public class UserAlimentsService {
     public void addUserAlimentByUserEmailAndAlimentName(UserAlimentsRequestDto userAlimentsRequestDto) {
         UserAccounts userAccounts = userAccountsService.getUserByUserEmail(userAlimentsRequestDto.email());
         Aliments aliments = alimentsService.getAlimentByAlimentName(userAlimentsRequestDto.alimentName());
-        addCaloriesAndMacros(userAlimentsRequestDto, userAccounts, aliments);
+        addCaloriesAndMacros(userAlimentsRequestDto.quantity(), userAccounts, aliments);
         UserAlimentsId userAlimentsId = new UserAlimentsId(userAccounts.getUuid(), aliments.getId());
         UserAliments userAliments = new UserAliments(userAlimentsId,userAccounts, aliments, userAlimentsRequestDto.quantity());
         userAlimentsRepository.save(userAliments);
 
     }
 
+    public void addUserAlimentQuantityByUserEmailAndAlimentName(UserAlimentsRequestDto userAlimentsRequestDto) {
+        UserAliments userAliment = userAlimentsRepository.getUserAlimentByUserIdAndAlimentId(
+                userAccountsService.getUserUUIDByUserEmail(userAlimentsRequestDto.email()),
+                alimentsService.getAlimentIdByAlimentName(userAlimentsRequestDto.alimentName()))
+                .orElseThrow(() -> {
+                    throw new NotFoundException("This aliment is not consumed");
+        });
+        addCaloriesAndMacros(userAlimentsRequestDto.quantity(), userAliment.getUserAccounts(), userAliment.getAliments());
+        userAliment.setQuantity(userAliment.getQuantity() + userAlimentsRequestDto.quantity());
+        userAlimentsRepository.save(userAliment);
+    }
+
     public void removeUserAlimentByUserEmailAndAlimentName(UserAlimentsDeleteRequestDto userAlimentsDeleteRequestDto) {
         UserAccounts userAccounts = userAccountsService.getUserByUserEmail(userAlimentsDeleteRequestDto.email());
         Aliments aliments = alimentsService.getAlimentByAlimentName(userAlimentsDeleteRequestDto.alimentName());
-        subtractCaloriesAndMacros(userAlimentsRepository.getQuantityByUserEmailAndAlimentName(userAccounts.getUuid(), aliments.getId()).orElseThrow(() -> {
+        subtractCaloriesAndMacros(userAlimentsRepository.getQuantityByUserIdAndAlimentId(userAccounts.getUuid(), aliments.getId()).orElseThrow(() -> {
             throw new NotFoundException("This user aliment doesn't exist");
                 }),
                 userAccounts, aliments);
@@ -55,12 +67,12 @@ public class UserAlimentsService {
         userAlimentsRepository.deleteAllUserAlimentsByUserId(userAccounts.getUuid());
     }
 
-    private static void addCaloriesAndMacros(UserAlimentsRequestDto userAlimentsRequestDto, UserAccounts userAccounts, Aliments aliments) {
-        double newCalories = userAccounts.getUserStats().getCalories() + userAlimentsRequestDto.quantity() * aliments.getCalories();
-        double newProtein = userAccounts.getUserStats().getProtein() + userAlimentsRequestDto.quantity() * aliments.getProtein();
-        double newCarbs = userAccounts.getUserStats().getCarbs() + userAlimentsRequestDto.quantity() * aliments.getCarbs();
-        double newFat = userAccounts.getUserStats().getFat() + userAlimentsRequestDto.quantity() * aliments.getFat();
-        double newFiber = userAccounts.getUserStats().getFiber() + userAlimentsRequestDto.quantity() * aliments.getFiber();
+    private static void addCaloriesAndMacros(Double quantity, UserAccounts userAccounts, Aliments aliments) {
+        double newCalories = userAccounts.getUserStats().getCalories() + quantity * aliments.getCalories();
+        double newProtein = userAccounts.getUserStats().getProtein() + quantity * aliments.getProtein();
+        double newCarbs = userAccounts.getUserStats().getCarbs() + quantity * aliments.getCarbs();
+        double newFat = userAccounts.getUserStats().getFat() + quantity * aliments.getFat();
+        double newFiber = userAccounts.getUserStats().getFiber() + quantity * aliments.getFiber();
         userAccounts.getUserStats().setCalories(newCalories);
         userAccounts.getUserStats().setProtein(newProtein);
         userAccounts.getUserStats().setCarbs(newCarbs);

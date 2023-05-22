@@ -3,6 +3,7 @@ package coj.and.CaloriesCalculator.useraliments;
 import coj.and.CaloriesCalculator.useraccounts.UserAccounts;
 import coj.and.CaloriesCalculator.aliments.Aliments;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.*;
 
 @Entity(name = "UserAliments")
@@ -28,6 +29,7 @@ public class UserAliments {
             foreignKey = @ForeignKey(name = "aliments_id_fk")
     )
     private Aliments aliments;
+    @Min(value = 0)
     @Column(name = "quantity", nullable = false, columnDefinition = "REAL")
     private Double quantity;
 
