@@ -51,6 +51,16 @@ export const consumeAliment = (email, alimentName, quantity) =>
 
     }).then(checkStatus);
 
+export const updateConsumeAliment = (email, alimentName, quantity) =>
+    fetch('/api/v1/userAliment', {
+        headers: {
+                    'Content-Type': 'application/json'
+                },
+        method: 'PUT',
+        body: JSON.stringify({email, alimentName, quantity})
+
+    }).then(checkStatus);
+
 
 
 export const deleteUserAliment = (email, alimentName) =>
