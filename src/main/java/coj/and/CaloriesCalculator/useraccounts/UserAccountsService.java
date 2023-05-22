@@ -1,11 +1,11 @@
 package coj.and.CaloriesCalculator.useraccounts;
 
 import coj.and.CaloriesCalculator.exception.NotFoundException;
-import coj.and.CaloriesCalculator.useraliments.UserAliments;
 import coj.and.CaloriesCalculator.userstats.UserStats;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -23,7 +23,12 @@ public class UserAccountsService {
         UserAccounts userAccounts = new UserAccounts(userAccountsDto.firstName(), userAccountsDto.lastName(),
                 hashedPassword, userAccountsDto.email(), userAccountsDto.gender());
 
-        userAccounts.setUserStats(new UserStats(userAccounts, 0.0 ,0.0 ,0.0 ,0.0, 0.0));
+        userAccounts.setUserStats(new UserStats(userAccounts,
+                BigDecimal.valueOf(0.0) ,
+                BigDecimal.valueOf(0.0) ,
+                BigDecimal.valueOf(0.0) ,
+                BigDecimal.valueOf(0.0),
+                BigDecimal.valueOf(0.0)));
         userAccountsRepository.save(userAccounts);
     }
 
@@ -60,7 +65,6 @@ public class UserAccountsService {
         MessageDigest md = MessageDigest.getInstance("SHA-512");
        // md.update(salt);
         byte[] hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8));
-        String passwordHash = Base64.getEncoder().encodeToString(hashedPassword);
-        return passwordHash;
+        return Base64.getEncoder().encodeToString(hashedPassword);
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -21,7 +22,7 @@ public interface UserAlimentsRepository extends JpaRepository<UserAliments, User
     @Transactional(readOnly = false)
     void deleteAllUserAlimentsByUserId(UUID uuid);
     @Query(value = "SELECT quantity FROM user_aliments WHERE user_id = ?1 AND aliments_id = ?2", nativeQuery = true)
-    Optional<Double> getQuantityByUserIdAndAlimentId(UUID userId, Long alimentId);
+    Optional<BigDecimal> getQuantityByUserIdAndAlimentId(UUID userId, Long alimentId);
 
     @Query(value = "SELECT * FROM user_aliments WHERE user_id = ?1 AND aliments_id = ?2", nativeQuery = true)
     Optional<UserAliments> getUserAlimentByUserIdAndAlimentId(UUID userId, Long alimentId);

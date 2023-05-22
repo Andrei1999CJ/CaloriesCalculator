@@ -1,5 +1,6 @@
 package coj.and.CaloriesCalculator.exception;
 
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -11,6 +12,12 @@ import java.time.ZonedDateTime;
 public class ApiExceptionHandler {
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleApiExceptions(MethodArgumentNotValidException e) {
+        ApiException apiException = new ApiException(e.getMessage(), HttpStatus.BAD_REQUEST, ZonedDateTime.now());
+        return new ResponseEntity<>(apiException, apiException.getHttpStatus());
+    }
+
+    @ExceptionHandler(value = ConstraintViolationException.class)
+    public ResponseEntity<Object> handleApiExceptions(ConstraintViolationException e) {
         ApiException apiException = new ApiException(e.getMessage(), HttpStatus.BAD_REQUEST, ZonedDateTime.now());
         return new ResponseEntity<>(apiException, apiException.getHttpStatus());
     }

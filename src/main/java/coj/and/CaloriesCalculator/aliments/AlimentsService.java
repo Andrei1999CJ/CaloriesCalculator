@@ -15,21 +15,12 @@ public class AlimentsService {
     private final AlimentsRepository alimentsRepository;
 
     public void addAliment(AlimentsDto aliment) {
-        if (alimentsRepository.count() == 0) {
-            Aliments aliments1 = new Aliments(aliment.name(),aliment.calories(), aliment.protein(), aliment.carbs(),
-                    aliment.fat(), aliment.fiber());
-            alimentsRepository.save(aliments1);
-        } else {
-            alimentsRepository.findAll().forEach((aliments -> {
-                if (aliments.getName().equals(aliment.name())) {
-                    throw new AlreadyExistsException("This aliment already exists");
-                } else {
-                    Aliments aliments1 = new Aliments(aliment.name(), aliment.calories(), aliment.protein(), aliment.carbs(),
-                            aliment.fat(), aliment.fiber());
-                    alimentsRepository.save(aliments1);
-                }
-            }));
-        }
+       alimentsRepository.save(new Aliments(aliment.name(),
+               aliment.calories(),
+               aliment.protein(),
+               aliment.carbs(),
+               aliment.fat(),
+               aliment.fiber()));
     }
 
     public void removeAliment(String alimentName) {
