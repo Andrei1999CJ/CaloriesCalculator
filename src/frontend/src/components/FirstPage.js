@@ -1,8 +1,10 @@
-import { Space, Table, Tag, Button, Progress } from 'antd';
+import { Space, Table, Tag, Button, Progress, Radio } from 'antd';
 import { useState, useEffect } from 'react';
 import {  getStats, getUserAliments, deleteAllUserAliments, deleteUserAliment } from './api.js';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { successNotificationWithIcon, errorNotificationWithIcon } from "./Notification";
+import UserAlimentsUpdateDrawerForm from "./UserAlimentsUpdateDrawerForm";
+
 
 
 
@@ -11,6 +13,8 @@ import { successNotificationWithIcon, errorNotificationWithIcon } from "./Notifi
 function FirstPage({firstPage, email}) {
     const [stats, setStats] = useState(false);
     const [userAliments, setUserAliments] = useState(false);
+    const [showUserAlimentsUpdateDrawer, setShowUserAlimentsUpdateDrawer] = useState(false);
+    const [alimentName, setAlimentName] = useState();
 
     const fetchStats = (email) =>
             getStats(email)
@@ -94,7 +98,10 @@ function FirstPage({firstPage, email}) {
           title: 'Actions',
           dataIndex: 'actions',
           key: 'actions',
-          render: (text, aliment) => <Button type = 'primary' onClick = {() => removeUserAliment(email, aliment.alimentName)}> Remove </Button>
+          render: (text, aliment) => <Radio.Group>
+                                             <Radio.Button onClick = {() => {setAlimentName(aliment.alimentName); setShowUserAlimentsUpdateDrawer(!showUserAlimentsUpdateDrawer)}} >Add more</Radio.Button>
+                                             <Radio.Button onClick = {() => removeUserAliment(email, aliment.alimentName)}> Remove </Radio.Button>
+                                     </Radio.Group>
         },
     ];
 
@@ -109,6 +116,10 @@ function FirstPage({firstPage, email}) {
 
    if (firstPage) {
            return <>
+           <UserAlimentsUpdateDrawerForm showUserAlimentsUpdateDrawer = {showUserAlimentsUpdateDrawer}
+           setShowUserAlimentsUpdateDrawer = {setShowUserAlimentsUpdateDrawer}
+           userName = {email} alimentName = {alimentName}
+            fetchUserAliments = {fetchUserAliments} fetchUserStats = {fetchStats}/>
            <Table dataSource = {userAliments} columns = {columns} bordered title= {() => <div><Button  onClick={() => {deleteUserAliments(email);}} type="primary" shape="round" icon = {<MinusOutlined />}  size="small">
                   Remove All Consumed Aliments
                   </Button> <center>Consumed Aliments</center></div>} rowKey={aliment => aliment.alimentName}  />
