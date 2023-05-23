@@ -1,7 +1,10 @@
 package coj.and.CaloriesCalculator.useraccounts;
 
 import coj.and.CaloriesCalculator.exception.NotFoundException;
+import coj.and.CaloriesCalculator.exception.UnauthorizedException;
 import coj.and.CaloriesCalculator.userstats.UserStats;
+import coj.and.CaloriesCalculator.userstats.UserStatsRequestDto;
+import coj.and.CaloriesCalculator.userstats.UserStatsRequestDtoMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UserAccountsService {
     private final UserAccountsRepository userAccountsRepository;
+    private final AccountInfoDtoMapper accountInfoDtoMapper;
+    private final UserStatsRequestDtoMapper userStatsRequestDtoMapper;
 
     public void createUser(UserAccountsDto userAccountsDto) throws NoSuchAlgorithmException {
         String hashedPassword = getHashedPassword(userAccountsDto.password());
@@ -34,15 +39,11 @@ public class UserAccountsService {
 
     public AccountInfoDto logInUser(UserAccountsLogInRequestDto userAccountsLogInRequestDto) throws NoSuchAlgorithmException {
         String hashedPassword = getHashedPassword(userAccountsLogInRequestDto.password());
-        UserAccounts userAccounts = userAccountsRepository.getUserByEmail(userAccountsLogInRequestDto.email())
-                .orElseThrow(() -> {
-                    throw new NotFoundException("User doesn't exist");
-                });
-        if (userAccounts.getPassword().equals(hashedPassword)) {
-            return new AccountInfoDto(userAccounts.getEmail(), userAccounts.getGender());
-        } else {
-            throw new NotFoundException("Log in failed");
-        }
+        return userAccountsRepository.findAll().stream()
+                .filter(account -> account.getEmail().equals(userAccountsLogInRequestDto.email()) &&
+                account.getPassword().equals(hashedPassword))
+                .map(accountInfoDtoMapper)
+                .findAny().orElseThrow(() -> new UnauthorizedException("User doesn't exists or Wrong credentials"));
 
     }
 
@@ -56,6 +57,12 @@ public class UserAccountsService {
         return userAccountsRepository.getUUIDByEmail(email).orElseThrow(() -> {
             throw new NotFoundException("Email doesn't exist");
         });
+    }
+
+    public UserStatsRequestDto getUserStats(String email) {
+        return userAccountsRepository.getUserByEmail(email)
+                .map(userStatsRequestDtoMapper)
+                .orElseThrow(() -> new NotFoundException("This user doesn't exist"));
     }
 
     private static String getHashedPassword(String password) throws NoSuchAlgorithmException {

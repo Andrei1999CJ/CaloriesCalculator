@@ -9,8 +9,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
 @AllArgsConstructor
@@ -18,12 +19,13 @@ public class UserAlimentsService {
     private final UserAlimentsRepository userAlimentsRepository;
     private final UserAccountsService userAccountsService;
     private final AlimentsService alimentsService;
+    private final UserAlimentsDtoMapper userAlimentsDtoMapper;
 
     public List<UserAlimentsDto> getUserAlimentsByUserEmail(String email) {
-        List<UserAlimentsDto> userAlimentsDtos = new ArrayList<>();
-        userAlimentsRepository.getAllUserAlimentsByUserId(userAccountsService.getUserUUIDByUserEmail(email))
-                .forEach((userAliment -> userAlimentsDtos.add(new UserAlimentsDto(userAliment.getAliments().getName(), userAliment.getQuantity()))));
-        return userAlimentsDtos;
+        return userAlimentsRepository.getAllUserAlimentsByUserId(userAccountsService.getUserUUIDByUserEmail(email))
+                .stream()
+                .map(userAlimentsDtoMapper)
+                .collect(Collectors.toList());
     }
 
     public void addUserAlimentByUserEmailAndAlimentName(UserAlimentsRequestDto userAlimentsRequestDto) {
