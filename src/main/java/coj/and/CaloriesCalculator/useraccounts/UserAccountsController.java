@@ -24,9 +24,6 @@ public class UserAccountsController {
 
     @GetMapping(path = "/userStats/{userEmail}")
     public UserStatsRequestDto getUserStats(@PathVariable(name = "userEmail") String email) {
-        UserAccounts userAccounts = userAccountsService.getUserByUserEmail(email);
-        return new UserStatsRequestDto(userAccounts.getUserStats().getCalories(),
-                userAccounts.getUserStats().getProtein(), userAccounts.getUserStats().getCarbs(),
-                userAccounts.getUserStats().getFat(), userAccounts.getUserStats().getFiber());
+        return userAccountsService.getUserStats(email);
     }
 }

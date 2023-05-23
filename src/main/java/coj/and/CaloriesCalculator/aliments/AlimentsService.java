@@ -7,12 +7,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
 @AllArgsConstructor
 public class AlimentsService {
     private final AlimentsRepository alimentsRepository;
+    private final AlimentsDtoMapper alimentsDtoMapper;
 
     public void addAliment(AlimentsDto aliment) {
        alimentsRepository.save(new Aliments(aliment.name(),
@@ -32,12 +34,10 @@ public class AlimentsService {
     }
 
     public List<AlimentsDto> getAllAliments() {
-        List<AlimentsDto> alimentsDtoList = new ArrayList<AlimentsDto>();
-        alimentsRepository.findAll().forEach(aliment -> {
-            alimentsDtoList.add(new AlimentsDto(aliment.getName(), aliment.getCalories(), aliment.getProtein(),
-            aliment.getCarbs(), aliment.getFat(), aliment.getFiber()));
-        });
-        return alimentsDtoList;
+        return alimentsRepository.findAll()
+                .stream()
+                .map(alimentsDtoMapper)
+                .collect(Collectors.toList());
     }
 
     public Aliments getAlimentByAlimentName(String name) {
