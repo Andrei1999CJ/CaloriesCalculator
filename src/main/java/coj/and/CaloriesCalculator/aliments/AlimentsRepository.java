@@ -14,7 +14,7 @@ public interface AlimentsRepository extends JpaRepository<Aliments, Long> {
     @Query(value = "SELECT u FROM Aliments u WHERE u.name = ?1")
     Optional<Aliments> getAlimentByName(String name);
     @Modifying
-    @Transactional(readOnly = false)
+    @Transactional
     @Query(value = "DELETE FROM aliments WHERE name = ?1", nativeQuery = true)
     void deleteAlimentByName(String name);
 

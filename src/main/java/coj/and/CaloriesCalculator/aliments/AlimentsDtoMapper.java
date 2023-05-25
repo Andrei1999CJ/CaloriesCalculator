@@ -1,6 +1,6 @@
 package coj.and.CaloriesCalculator.aliments;
 
-import lombok.AllArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 import java.util.function.Function;
