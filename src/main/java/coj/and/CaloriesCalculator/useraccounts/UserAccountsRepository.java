@@ -15,4 +15,7 @@ public interface UserAccountsRepository extends JpaRepository<UserAccounts, UUID
      Optional<UserAccounts> getUserByEmail(String email);
      @Query(value = "SELECT u.uuid FROM UserAccounts u WHERE u.email = ?1")
      Optional<UUID> getUUIDByEmail(String email);
+
+     @Query(value = "SELECT u FROM UserAccounts u WHERE u.email = ?1 AND u.password = ?2")
+     Optional<UserAccounts> findByEmailAndPassword(String email, String password);
 }

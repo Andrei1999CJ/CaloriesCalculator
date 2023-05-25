@@ -19,7 +19,7 @@ public interface UserAlimentsRepository extends JpaRepository<UserAliments, User
 
     @Query(value = "DELETE FROM user_aliments WHERE user_id = ?1", nativeQuery = true)
     @Modifying
-    @Transactional(readOnly = false)
+    @Transactional
     void deleteAllUserAlimentsByUserId(UUID uuid);
     @Query(value = "SELECT quantity FROM user_aliments WHERE user_id = ?1 AND aliments_id = ?2", nativeQuery = true)
     Optional<BigDecimal> getQuantityByUserIdAndAlimentId(UUID userId, Long alimentId);

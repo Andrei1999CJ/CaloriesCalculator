@@ -8,9 +8,9 @@ server:
 
 spring:
   datasource:
-    password: password
+    password: ${DB_PASSWORD}
     url: jdbc:postgresql://localhost:5432/calories_calculator
-    username: cojand
+    username: ${DB_USERNAME}
   jpa:
     hibernate:
       ddl-auto: update

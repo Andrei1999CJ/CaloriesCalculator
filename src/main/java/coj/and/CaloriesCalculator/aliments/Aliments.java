@@ -44,7 +44,7 @@ public class Aliments {
     @Min(value = 0, message = "Fiber should not be negative")
     private BigDecimal fiber;
     @OneToMany(mappedBy = "aliments", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserAliments> userAliments = new ArrayList<UserAliments>();
+    private List<UserAliments> userAliments = new ArrayList<>();
 
     public Aliments(String name, BigDecimal calories, BigDecimal protein, BigDecimal carbs, BigDecimal fat, BigDecimal fiber) {
         this.name = name;
