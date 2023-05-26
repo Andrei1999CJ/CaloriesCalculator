@@ -5,6 +5,7 @@ import coj.and.CaloriesCalculator.exception.UnauthorizedException;
 import coj.and.CaloriesCalculator.userstats.UserStats;
 import coj.and.CaloriesCalculator.userstats.UserStatsRequestDto;
 import coj.and.CaloriesCalculator.userstats.UserStatsRequestDtoMapper;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

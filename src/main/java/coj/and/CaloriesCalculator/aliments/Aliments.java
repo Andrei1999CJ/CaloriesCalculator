@@ -1,5 +1,6 @@
 package coj.and.CaloriesCalculator.aliments;
 
+import coj.and.CaloriesCalculator.annotations.NoInjection.NoInjection;
 import coj.and.CaloriesCalculator.useraliments.UserAliments;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
@@ -27,6 +28,7 @@ public class Aliments {
     private Long id;
     @Column(name = "name", nullable = false, columnDefinition = "TEXT")
     @NotBlank(message = "Name should not be blank")
+    @NoInjection(message = "Illegal characters or words")
     private String name;
     @Column(name = "calories", nullable = false, columnDefinition = "REAL")
     @Min(value = 0, message = "Calories should not be negative")

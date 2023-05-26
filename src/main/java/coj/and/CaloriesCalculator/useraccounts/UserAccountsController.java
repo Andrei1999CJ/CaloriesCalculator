@@ -18,7 +18,7 @@ public class UserAccountsController {
     }
     @GetMapping(path = "user/login")
     public AccountInfoDto logInUser(@RequestParam(name = "email") String email, @RequestParam(name = "password") String password) throws NoSuchAlgorithmException {
-        return userAccountsService.logInUser(new UserAccountsLogInRequestDto(email, password));
+        return userAccountsService.logInUser( new UserAccountsLogInRequestDto(email, password));
     }
 
 
