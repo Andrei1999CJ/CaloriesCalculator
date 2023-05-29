@@ -1,4 +1,7 @@
 package coj.and.CaloriesCalculator.useraccounts;
 
-public record AccountInfoDto(String email, Gender gender) {
+import lombok.Builder;
+
+@Builder
+public record AccountInfoDto(String email, String token) {
 }

@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @EqualsAndHashCode
+@Builder
 public class UserStats {
     @Id
     @OneToOne(cascade = CascadeType.ALL)
