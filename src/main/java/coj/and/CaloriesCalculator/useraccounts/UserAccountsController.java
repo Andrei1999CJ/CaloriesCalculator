@@ -12,11 +12,11 @@ import java.security.NoSuchAlgorithmException;
 @AllArgsConstructor
 public class UserAccountsController {
     private final UserAccountsService userAccountsService;
-    @PostMapping(path = "/user")
+    @PostMapping(path = "/auth/user")
     public void addUser(@Valid @RequestBody UserAccountsDto userAccountsDto) throws NoSuchAlgorithmException {
         userAccountsService.createUser(userAccountsDto);
     }
-    @GetMapping(path = "user/login")
+    @GetMapping(path = "/auth/login")
     public AccountInfoDto logInUser(@RequestParam(name = "email") String email, @RequestParam(name = "password") String password) throws NoSuchAlgorithmException {
         return userAccountsService.logInUser( new UserAccountsLogInRequestDto(email, password));
     }

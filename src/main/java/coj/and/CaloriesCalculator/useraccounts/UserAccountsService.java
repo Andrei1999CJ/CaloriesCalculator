@@ -2,47 +2,64 @@ package coj.and.CaloriesCalculator.useraccounts;
 
 import coj.and.CaloriesCalculator.exception.NotFoundException;
 import coj.and.CaloriesCalculator.exception.UnauthorizedException;
+import coj.and.CaloriesCalculator.security.JwtService;
 import coj.and.CaloriesCalculator.userstats.UserStats;
 import coj.and.CaloriesCalculator.userstats.UserStatsRequestDto;
 import coj.and.CaloriesCalculator.userstats.UserStatsRequestDtoMapper;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
 import java.util.UUID;
 
 @Service
 @AllArgsConstructor
 public class UserAccountsService {
     private final UserAccountsRepository userAccountsRepository;
-    private final AccountInfoDtoMapper accountInfoDtoMapper;
     private final UserStatsRequestDtoMapper userStatsRequestDtoMapper;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
-    public void createUser(UserAccountsDto userAccountsDto) throws NoSuchAlgorithmException {
-        String hashedPassword = getHashedPassword(userAccountsDto.password());
-        UserAccounts userAccounts = new UserAccounts(userAccountsDto.firstName(), userAccountsDto.lastName(),
-                hashedPassword, userAccountsDto.email(), userAccountsDto.gender());
-
-        userAccounts.setUserStats(new UserStats(userAccounts,
-                BigDecimal.valueOf(0.0) ,
-                BigDecimal.valueOf(0.0) ,
-                BigDecimal.valueOf(0.0) ,
-                BigDecimal.valueOf(0.0),
-                BigDecimal.valueOf(0.0)));
+    public void createUser(UserAccountsDto userAccountsDto) {
+        UserAccounts userAccounts = UserAccounts.builder()
+                .firstName(userAccountsDto.firstName())
+                .lastName(userAccountsDto.lastName())
+                .password(passwordEncoder.encode(userAccountsDto.password()))
+                .email(userAccountsDto.email())
+                .gender(userAccountsDto.gender())
+                .role(Role.USER)
+                .build();
+        userAccounts.setUserStats(
+                UserStats.builder()
+                        .calories(BigDecimal.valueOf(0.0))
+                        .protein(BigDecimal.valueOf(0.0))
+                        .carbs(BigDecimal.valueOf(0.0))
+                        .fat(BigDecimal.valueOf(0.0))
+                        .fiber(BigDecimal.valueOf(0.0))
+                        .userAccounts(userAccounts)
+                        .build()
+        );
         userAccountsRepository.save(userAccounts);
     }
 
-    public AccountInfoDto logInUser(UserAccountsLogInRequestDto userAccountsLogInRequestDto) throws NoSuchAlgorithmException {
-        String hashedPassword = getHashedPassword(userAccountsLogInRequestDto.password());
-        return userAccountsRepository.findByEmailAndPassword(userAccountsLogInRequestDto.email(), hashedPassword)
-                .map(accountInfoDtoMapper)
+    public AccountInfoDto logInUser(UserAccountsLogInRequestDto userAccountsLogInRequestDto) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        userAccountsLogInRequestDto.email(),
+                        userAccountsLogInRequestDto.password()
+                )
+        );
+        var user = userAccountsRepository.getUserByEmail(userAccountsLogInRequestDto.email())
                 .orElseThrow(() -> new UnauthorizedException("User doesn't exists or Wrong credentials"));
-
+        var jwtToken = jwtService.generateToken(user);
+        return AccountInfoDto.builder()
+                .email(userAccountsLogInRequestDto.email())
+                .token(jwtToken)
+                .build();
     }
 
     public UserAccounts getUserByUserEmail(String email) {
@@ -61,11 +78,5 @@ public class UserAccountsService {
         return userAccountsRepository.getUserByEmail(email)
                 .map(userStatsRequestDtoMapper)
                 .orElseThrow(() -> new NotFoundException("This user doesn't exist"));
-    }
-
-    private static String getHashedPassword(String password) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("SHA-512");
-        byte[] hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8));
-        return Base64.getEncoder().encodeToString(hashedPassword);
     }
 }
