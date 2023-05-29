@@ -5,15 +5,18 @@ import { useState } from 'react';
 
 
  export let email;
+ export let token;
 
 function SignInForm({signIn, state, setState}) {
 
 
     const onFinish = (values) => {
       signInUser(values)
-        .then(() => {
+        .then(res => res.json())
+        .then(res => {
             setState(true);
             email = values.email;
+            token = res.token;
         }).catch((err) => {
                 //var status = err.response.status;
                 err.response.json().then((res) => {
