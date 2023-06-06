@@ -26,10 +26,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> {
                     try {
                         authorize
-                                .requestMatchers("/api/v1/auth/**")
-                                .permitAll()
-                                .anyRequest()
+                                .requestMatchers("/api/v1/aliment/**", "/api/v1/userStats/**", "/api/v1/userAliment/**")
                                 .authenticated()
+                                .anyRequest()
+                                .permitAll()
                                 .and()
                                 .sessionManagement()
                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

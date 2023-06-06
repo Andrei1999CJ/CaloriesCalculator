@@ -111,8 +111,7 @@ export const deleteAliment = (alimentName) =>
 export const signUp = (account) =>
     fetch('/api/v1/auth/user', {
         headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
+                    'Content-Type': 'application/json'
              },
         method: 'POST',
         body: JSON.stringify(account)
