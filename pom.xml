@@ -230,7 +230,7 @@
                                   https://repo1.maven.org/maven2/com/github/eirslett/frontend-maven-plugin/ -->
 						<version>1.12.1</version>
 						<configuration>
-							<nodeVersion>v18.16.0</nodeVersion>
+							<nodeVersion>v10.16.0</nodeVersion>
 							<workingDirectory>src/frontend</workingDirectory>
 						</configuration>
 						<executions>
@@ -240,8 +240,8 @@
 									<goal>install-node-and-npm</goal>
 								</goals>
 								<configuration>
-									<nodeVersion>v18.16.0</nodeVersion>
-									<npmVersion>9.7.1</npmVersion>
+									<nodeVersion>v10.16.0</nodeVersion>
+									<npmVersion>6.10.2</npmVersion>
 								</configuration>
 							</execution>
 							<execution>
