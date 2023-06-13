@@ -1,7 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
 import { useEffect, useState } from 'react';
-import { Button, Space } from 'antd';
 import LayoutComp from './components/Layout';
 import AccountPage from './components/AccountPage';
 

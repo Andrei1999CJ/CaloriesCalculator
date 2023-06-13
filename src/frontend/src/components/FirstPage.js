@@ -4,6 +4,7 @@ import {  getStats, getUserAliments, deleteAllUserAliments, deleteUserAliment } 
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { successNotificationWithIcon, errorNotificationWithIcon } from "./Notification";
 import UserAlimentsUpdateDrawerForm from "./UserAlimentsUpdateDrawerForm";
+import email from "./SignInForm";
 
 
 
