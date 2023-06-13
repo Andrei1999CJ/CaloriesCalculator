@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+  backend:
+      container_name: calc
+      image: "andrei1999cj/calories-calculator:latest"
+      environment:
+        - SPRING_PROFILES_ACTIVE=amazon
+        - DB_USERNAME=andrei1999cj
+        - DB_PASSWORD=Eaoppbdd32
+        - SECRET_KEY_VALUE="5367566B59703373357638792F423F4528482B4D6251655468576D5A71347437"
+        - DB_SERVER_NAME=awseb-e-nf483izimh-stack-awsebrdsdatabase-ovxalsn0fswq.c9ls5sjeztc7.us-east-1.rds.amazonaws.com
+        - DB_NAME=calories_calculator
+      ports:
+        - "80:8080"
+      restart: "always"
+
