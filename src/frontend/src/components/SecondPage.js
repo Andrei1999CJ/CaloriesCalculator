@@ -1,4 +1,4 @@
-import { Space, Table, Tag, Button, Progress, Radio } from 'antd';
+import { Table, Button, Radio } from 'antd';
 import { useState, useEffect } from 'react';
 import { getAllAliments, deleteAliment } from './api.js';
 import { PlusOutlined } from '@ant-design/icons';
@@ -15,7 +15,6 @@ function SecondPage ({secondPage, email}) {
     const [aliments, setAliments] = useState([]);
     const [showAlimentsDrawer, setShowAlimentsDrawer] = useState(false);
     const [showUserAlimentsDrawer, setShowUserAlimentsDrawer] = useState(false);
-    const [stats, setStats] = useState(false);
     const [alimentName, setAlimentName] = useState();
 
     const removeAliment = (alimentName) =>

@@ -1,7 +1,6 @@
 import { Button, Checkbox, Form, Input } from 'antd';
 import { signInUser } from './api';
-import { successNotificationWithIcon, errorNotificationWithIcon } from "./Notification";
-import { useState } from 'react';
+import { errorNotificationWithIcon } from "./Notification";
 
 
  export let email;
