@@ -1,4 +1,4 @@
-import { Button, Checkbox, Form, Input, Row, Col, Select } from 'antd';
+import { Button, Form, Input, Row, Col, Select } from 'antd';
 import { signUp } from './api';
 import { successNotificationWithIcon, errorNotificationWithIcon } from "./Notification";
 

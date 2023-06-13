@@ -1,7 +1,7 @@
-import { Space, Table, Tag, Button, Progress, Radio } from 'antd';
+import { Table, Button, Progress, Radio } from 'antd';
 import { useState, useEffect } from 'react';
-import {  getStats, getUserAliments, deleteAllUserAliments, deleteUserAliment } from './api.js';
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
+import { getStats, getUserAliments, deleteAllUserAliments, deleteUserAliment } from './api.js';
+import { MinusOutlined } from '@ant-design/icons';
 import { successNotificationWithIcon, errorNotificationWithIcon } from "./Notification";
 import UserAlimentsUpdateDrawerForm from "./UserAlimentsUpdateDrawerForm";
 
@@ -112,7 +112,7 @@ function FirstPage({firstPage, email}) {
              fetchStats(email);
              fetchUserAliments(email);
              }
-           },[firstPage])
+           },[firstPage, email])
 
    if (firstPage) {
            return <>

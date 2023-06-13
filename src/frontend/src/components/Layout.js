@@ -1,6 +1,6 @@
-import { FileOutlined, PieChartOutlined, UserOutlined, DesktopOutlined, TeamOutlined, LaptopOutlined} from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, theme, Button, Avatar } from 'antd';
-import { useState, useEffect } from 'react';
+import { UserOutlined, LaptopOutlined} from '@ant-design/icons';
+import { Layout, Menu, Button, Avatar } from 'antd';
+import { useState } from 'react';
 import  SecondPage  from './SecondPage';
 import  FirstPage  from './FirstPage';
 import { email } from './SignInForm';

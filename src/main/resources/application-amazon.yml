@@ -1,0 +1,21 @@
+server:
+  port: 8080
+  name: CaloriesCalculator
+  error:
+    include-message: always
+    include-binding: always
+    include-stacktrace: never
+
+spring:
+  datasource:
+    password: ${DB_PASSWORD}
+    url: jdbc:postgresql://${DB_SERVER_NAME}:5432/${DB_NAME}
+    username: ${DB_USERNAME}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true

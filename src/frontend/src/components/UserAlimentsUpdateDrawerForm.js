@@ -1,17 +1,13 @@
-import {Drawer, Input, Col, Select, Form, Row, Button, InputNumber} from 'antd';
+import {Drawer, Col, Form, Row, Button, InputNumber} from 'antd';
 import { updateConsumeAliment } from './api';
-import { useState } from 'react';
 import { successNotificationWithIcon, errorNotificationWithIcon } from "./Notification";
 
-const {Option} = Select;
 
 function UserAlimentsUpdateDrawerForm({showUserAlimentsUpdateDrawer, setShowUserAlimentsUpdateDrawer, userName, alimentName, fetchUserAliments, fetchUserStats}) {
 
-    const [submiting, setSubmiting] = useState(false);
     const onCLose = () => setShowUserAlimentsUpdateDrawer(false);
 
     const onFinish = value => {
-        //setSubmiting(true);
         updateConsumeAliment(userName, alimentName, value.quantity)
             .then(() => {
                 successNotificationWithIcon("Consumed Aliment updated", `${value.quantity} portion(s) of ${alimentName} is(are) consumed`);
