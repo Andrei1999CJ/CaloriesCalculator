@@ -31,4 +31,4 @@ jobs:
           distribution: 'oracle'
           java-version: ${{ env.JAVA_VERSION }}
       - name: Maven Clean Package
-        run: mvn clean package -D DB_PASSWORD=${{secrets.DB_PASSWORD}} -D DB_USERNAME=cojand -D SECRET_KEY_VALUE=${{secrets.SECRET_KEY_VALUE}}
+        run: mvn clean package -P build-frontend -D DB_PASSWORD=${{secrets.DB_PASSWORD}} -D DB_USERNAME=cojand -D SECRET_KEY_VALUE=${{secrets.SECRET_KEY_VALUE}}
