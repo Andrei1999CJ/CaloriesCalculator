@@ -63,7 +63,7 @@ jobs:
 
       - name: Maven Clean Package and Push to Dockerhub
         run: |
-          mvn --no-transfer-progress clean install -P build-frontend -P jib-push-to-docker -Dapp.image.tag=${{steps.build-number.outputs.BUILD_NUMBER}} -D DB_PASSWORD=${{secrets.DB_PASSWORD}} -D DB_USERNAME=cojand -D SECRET_KEY_VALUE=${{secrets.SECRET_KEY_VALUE}}
+          mvn --no-transfer-progress clean install -P build-frontend -P jib-push-to-dockerhub -Dapp.image.tag=${{steps.build-number.outputs.BUILD_NUMBER}} -D DB_PASSWORD=${{secrets.DB_PASSWORD}} -D DB_USERNAME=cojand -D SECRET_KEY_VALUE=${{secrets.SECRET_KEY_VALUE}}
       - uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
@@ -74,12 +74,12 @@ jobs:
       - name: Update and commit app version in docker-compose.yaml
         run: |
           BUILD_NUMBER=${{steps.build-number.outputs.BUILD_NUMBER}}
-          echo -e "Current elasticbeanstalk/docker-compose.yml\n$(cat elasticbeanstalk/docker-compose.yml)"
-          sed -i -E 's_(andrei1999cj/springboot-react-fullstack:)([^"]*)_\1'${BUILD_NUMBER}'_' elasticbeanstalk/docker-compose.yml
-          echo -e "Current elasticbeanstalk/docker-compose.yml\n$(cat elasticbeanstalk/docker-compose.yml)"
+          echo -e "Current src/main/resources/docker-compose.yml\n$(cat src/main/resources/docker-compose.yml)"
+          sed -i -E 's_(andrei1999cj/calories-calculator:)([^"]*)_\1'${BUILD_NUMBER}'_' src/main/resources/docker-compose.yml
+          echo -e "Current src/main/resources/docker-compose.yml\n$(cat src/main/resources/docker-compose.yml)"
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add elasticbeanstalk/docker-compose.yml
+          git add src/main/resources/docker-compose.yml
           git commit -m "new app version: ${BUILD_NUMBER}"
           git push
 
