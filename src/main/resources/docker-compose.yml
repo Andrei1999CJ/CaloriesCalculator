@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  backend:
+      container_name: calc
+      image: "andrei1999cj/calories-calculator:latest"
+      environment:
+        - SPRING_PROFILES_ACTIVE=amazon
+        - DB_USERNAME=${{secrets.DB_USERNAME_PRODUCTION}}
+        - DB_PASSWORD=${{secrets.DB_PASSWORD_PRODUCTION}}
+        - SECRET_KEY_VALUE=${{secrets.SECRET_KEY_VALUE}}
+        - DB_SERVER_NAME=${{secrets.DB_PASSWORD_PRODUCTION}}
+        - DB_NAME=calories_calculator
+      ports:
+        - "80:8080"
+      restart: "always"
