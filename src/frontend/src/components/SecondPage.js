@@ -1,4 +1,4 @@
-import { Table, Button, Radio } from 'antd';
+import { Table, Button, Radio, Tag } from 'antd';
 import { useState, useEffect } from 'react';
 import { getAllAliments, deleteAliment } from './api.js';
 import { PlusOutlined } from '@ant-design/icons';
@@ -60,6 +60,27 @@ function SecondPage ({secondPage, email}) {
           title: 'Fiber',
           dataIndex: 'fiber',
           key: 'fiber',
+        },
+        {
+            title: 'Tags',
+            key: 'tags',
+            dataIndex: 'tags',
+            render: (text, aliment) => {
+            var color, tag;
+
+                if (aliment.calories <= 100) {
+                    color = 'green';
+                     tag = 'low calorie dense';
+                } else if (aliment.calories > 100 && aliment.calories <= 400) {
+                    color = 'yellow';
+                    tag = 'medium calorie dense';
+                } else {
+                    color = 'red';
+                    tag = 'high calorie dense';
+                }
+                return <Tag color = {color} key = {tag}>{tag.toUpperCase()}</Tag>;
+
+            }
         },
         {
               title: 'Actions',
