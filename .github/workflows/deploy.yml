@@ -71,7 +71,7 @@ jobs:
           text: ':white_check_mark: pushed andrei1999cj/calories-calculator:${{steps.build-number.outputs.BUILD_NUMBER}} to docker hub... https://hub.docker.com/repository/docker/andrei1999cj/calories-calculator'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      - name: Update and commit app version in docker-compose.yaml
+      - name: Update and commit app version in docker-compose.yml
         run: |
           BUILD_NUMBER=${{steps.build-number.outputs.BUILD_NUMBER}}
           echo -e "Current src/main/resources/docker-compose.yml\n$(cat src/main/resources/docker-compose.yml)"
