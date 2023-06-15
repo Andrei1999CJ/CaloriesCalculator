@@ -3,15 +3,12 @@ import { addAliment } from './api';
 import { useState } from 'react';
 import { successNotificationWithIcon, errorNotificationWithIcon } from "./Notification";
 
-const {Option} = Select;
 
 function AlimentsDrawerForm({showAlimentsDrawer, setShowAlimentsDrawer, fetchAllAliments}) {
 
-    const [submiting, setSubmiting] = useState(false);
     const onCLose = () => setShowAlimentsDrawer(false);
 
     const onFinish = values => {
-        //setSubmiting(true);
         addAliment(values).then(() => {
                 successNotificationWithIcon("Aliment added", `Aliment with name ${values.name} is added`);
                 console.log("gata");

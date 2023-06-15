@@ -1,10 +1,10 @@
-import { Breadcrumb, Layout, Menu, theme, Button, } from 'antd';
+import { Layout, Menu, Button } from 'antd';
 import {useState} from 'react';
 import SignInForm from './SignInForm';
 import SignUpForm from './SignUpForm';
 
 
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 
 function AccountPage({state, setState}) {
 
