@@ -5,10 +5,10 @@ services:
     image: "andrei1999cj/calories-calculator:14.6.2023.16.3.40"
     environment:
       - SPRING_PROFILES_ACTIVE=amazon
-      - DB_USERNAME=andrei1999cj
-      - DB_PASSWORD=Esobddsaopn32
-      - SECRET_KEY_VALUE="5367566B59703373357638792F423F4528482B4D6251655468576D5A71347437"
-      - DB_SERVER_NAME=awseb-e-bxjc3fubeh-stack-awsebrdsdatabase-gxl7y7wuenne.c9ls5sjeztc7.us-east-1.rds.amazonaws.com
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - SECRET_KEY_VALUE=${SECRET_KEY_VALUE}
+      - DB_SERVER_NAME=${DB_SERVER_NAME}
       - DB_NAME=${DB_NAME}
     ports:
       - "80:8080"
