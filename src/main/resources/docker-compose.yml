@@ -8,7 +8,7 @@ services:
         - DB_USERNAME=${{secrets.DB_USERNAME_PRODUCTION}}
         - DB_PASSWORD=${{secrets.DB_PASSWORD_PRODUCTION}}
         - SECRET_KEY_VALUE=${{secrets.SECRET_KEY_VALUE}}
-        - DB_SERVER_NAME=${{secrets.DB_PASSWORD_PRODUCTION}}
+        - DB_SERVER_NAME=${{secrets.DB_SERVER_NAME}}
         - DB_NAME=calories_calculator
       ports:
         - "80:8080"
