@@ -19,7 +19,7 @@ env:
   AWS_REGION: us-east-1
   EB_ENVIRONMENT_NAME: Caloriescalculator-env
   EB_APPLICATION_NAME: CaloriesCalculator
-  EB_DEPLOYMENT_PACKAGE: src/main/resources/docker-compose.yml -e DB_NAME=calories_calculator
+  EB_DEPLOYMENT_PACKAGE: src/main/resources/docker-compose.yml
 
 jobs:
   deploy:
