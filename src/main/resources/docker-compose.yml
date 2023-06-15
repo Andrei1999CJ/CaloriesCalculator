@@ -9,7 +9,7 @@ services:
       - DB_PASSWORD=Esobddsaopn32
       - SECRET_KEY_VALUE="5367566B59703373357638792F423F4528482B4D6251655468576D5A71347437"
       - DB_SERVER_NAME=awseb-e-bxjc3fubeh-stack-awsebrdsdatabase-gxl7y7wuenne.c9ls5sjeztc7.us-east-1.rds.amazonaws.com
-      - DB_NAME=${{secrets.DB_NAME}}
+      - DB_NAME=${secrets.DB_NAME}
     ports:
       - "80:8080"
     restart: "always"
