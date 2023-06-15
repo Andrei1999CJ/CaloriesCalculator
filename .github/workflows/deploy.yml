@@ -90,9 +90,9 @@ jobs:
           text: ':elasticbeanstalk: :aws: Deployment started... :grimacing: :crossed_fingers:'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      - name: Beanstalk Deploy
+      - name: Write values
         run: sed -i -E 's_(DB_NAME:)([^"]*)_\1'${{env.DB_NAME}} src/main/resources/docker-compose.yml
-
+      - name: Beanstalk Deploy
         uses: einaregilsson/beanstalk-deploy@ebe3476a4ce991d54336935e75e78dd9d86f9408
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
