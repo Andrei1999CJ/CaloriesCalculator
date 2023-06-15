@@ -1,6 +1,5 @@
-import {Drawer, Input, Col, Select, Form, Row, Button, InputNumber} from 'antd';
+import {Drawer, Input, Col, Form, Row, Button, InputNumber} from 'antd';
 import { addAliment } from './api';
-import { useState } from 'react';
 import { successNotificationWithIcon, errorNotificationWithIcon } from "./Notification";
 
 
