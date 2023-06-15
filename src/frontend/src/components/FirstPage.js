@@ -1,6 +1,6 @@
 import { Table, Button, Progress, Radio } from 'antd';
 import { useState, useEffect } from 'react';
-import { getStats, getUserAliments, deleteAllUserAliments, deleteUserAliment } from './api.js';
+import {  getStats, getUserAliments, deleteAllUserAliments, deleteUserAliment } from './api.js';
 import { MinusOutlined } from '@ant-design/icons';
 import { successNotificationWithIcon, errorNotificationWithIcon } from "./Notification";
 import UserAlimentsUpdateDrawerForm from "./UserAlimentsUpdateDrawerForm";

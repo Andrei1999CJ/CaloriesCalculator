@@ -1,4 +1,4 @@
-import { UserOutlined, LaptopOutlined} from '@ant-design/icons';
+import { UserOutlined, LaptopOutlined } from '@ant-design/icons';
 import { Layout, Menu, Button, Avatar } from 'antd';
 import { useState } from 'react';
 import  SecondPage  from './SecondPage';
