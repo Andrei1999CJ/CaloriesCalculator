@@ -91,7 +91,9 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Write values
-        run: sed -i 's/${DB_NAME}/${{env.DB_NAME}}/g' src/main/resources/docker-compose.yml
+        run: |
+          sed -i 's/${DB_NAME}/${{env.DB_NAME}}/g' src/main/resources/docker-compose.yml
+          echo ${{env.DB_NAME}}
       - name: Beanstalk Deploy
         uses: einaregilsson/beanstalk-deploy@ebe3476a4ce991d54336935e75e78dd9d86f9408
         with:
