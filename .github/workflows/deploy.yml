@@ -90,10 +90,13 @@ jobs:
           text: ':elasticbeanstalk: :aws: Deployment started... :grimacing: :crossed_fingers:'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      - name: Write values
+      - name: Replace values from docker-compose.yml with secrets from github
         run: |
           sed -i 's/${DB_NAME}/${{ secrets.DB_NAME }}/g' src/main/resources/docker-compose.yml
-          echo ${{ secrets.DB_NAME }}
+          sed -i 's/${DB_USERNAME}/${{ secrets.DB_USERNAME_PRODUCTION }}/g' src/main/resources/docker-compose.yml
+          sed -i 's/${DB_PASSWORD}/${{ secrets.DB_PASSWORD_PRODUCTION }}/g' src/main/resources/docker-compose.yml
+          sed -i 's/${SECRET_KEY_VALUE}/${{ secrets.SECRET_KEY_VALUE }}/g' src/main/resources/docker-compose.yml
+          sed -i 's/${DB_SERVER_NAME}/${{ secrets.DB_SERVER_NAME }}/g' src/main/resources/docker-compose.yml
       - name: Beanstalk Deploy
         uses: einaregilsson/beanstalk-deploy@ebe3476a4ce991d54336935e75e78dd9d86f9408
         with:
