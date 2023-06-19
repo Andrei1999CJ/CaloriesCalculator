@@ -1,6 +1,7 @@
 package coj.and.CaloriesCalculator.aliments;
 
 import coj.and.CaloriesCalculator.exception.AlreadyExistsException;
+import coj.and.CaloriesCalculator.exception.ConflictException;
 import coj.and.CaloriesCalculator.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,11 @@ public class AlimentsService {
 
     public void removeAliment(String alimentName) {
         alimentsRepository.getAlimentByName(alimentName).ifPresentOrElse((aliment) -> {
-            alimentsRepository.deleteAlimentByName(aliment.getName());
+            try {
+                alimentsRepository.deleteAlimentByName(aliment.getName());
+            } catch(Exception e) {
+                throw new ConflictException("You're not allowed to delete this aliment because it's consumed by a person");
+            }
         }, () -> {
             throw new NotFoundException("This aliment doesn't exist");
         });
