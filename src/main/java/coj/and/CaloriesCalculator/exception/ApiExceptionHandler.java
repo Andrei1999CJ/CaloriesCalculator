@@ -39,4 +39,10 @@ public class ApiExceptionHandler {
         ApiException apiException = new ApiException(e.getMessage(), HttpStatus.UNAUTHORIZED, ZonedDateTime.now());
         return new ResponseEntity<>(apiException, apiException.httpStatus());
     }
+
+    @ExceptionHandler(value = ConflictException.class)
+    public ResponseEntity<Object> handleApiExceptions(ConflictException e) {
+        ApiException apiException = new ApiException(e.getMessage(), HttpStatus.CONFLICT, ZonedDateTime.now());
+        return new ResponseEntity<>(apiException, apiException.httpStatus());
+    }
 }
