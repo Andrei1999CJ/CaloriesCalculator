@@ -2,7 +2,7 @@ version: "3.8"
 services:
   backend:
     container_name: calc
-    image: "andrei1999cj/calories-calculator:3.7.2023.18.17.25"
+    image: "andrei1999cj/calories-calculator:17.8.2023.6.8.58"
     environment:
       - SPRING_PROFILES_ACTIVE=amazon
       - DB_USERNAME=${DB_USERNAME}
