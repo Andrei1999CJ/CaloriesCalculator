@@ -1,5 +1,5 @@
-import { UserOutlined, LaptopOutlined } from '@ant-design/icons';
-import { Layout, Menu, Button, Avatar } from 'antd';
+import { UserOutlined, LaptopOutlined, LinkedinOutlined } from '@ant-design/icons';
+import { Layout, Menu, Button, Avatar, Tag } from 'antd';
 import { useState } from 'react';
 import  SecondPage  from './SecondPage';
 import  FirstPage  from './FirstPage';
@@ -77,7 +77,9 @@ function LayoutComp({showLayout}) {
             textAlign: 'center',
           }}
         >
-          By Cojocariu Andrei
+              <Tag icon={<LinkedinOutlined />} color="#55acee">
+                <a href = "https://www.linkedin.com/in/andrei-cojocariu-b4aa38246/"> LinkedIn </a>
+          </Tag>
         </Footer>
       </Layout>
     </Layout>
