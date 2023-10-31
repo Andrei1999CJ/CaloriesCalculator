@@ -23,4 +23,8 @@ public class AlimentsController {
     public List<AlimentsDto> getAllAliments() {
         return alimentsService.getAllAliments();
     }
+    @GetMapping(path = "/search-bar/{alimentName}")
+    public List<AlimentsDto> getAllAlimentsByKeyword(@PathVariable(name = "alimentName") String keyword) {
+        return alimentsService.getAlimentsThatContainsKeyWord(keyword);
+    }
 }
