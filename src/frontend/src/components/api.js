@@ -22,6 +22,18 @@ export const getAllAliments = () =>
         .then(checkStatus);
 
 
+export const getAllAlimentsByKeyword = (keyword) =>
+    fetch(`/api/v1/aliment/search-bar/${keyword}`, {
+        headers: {
+            'Content-Type': 'application.json',
+            'Authorization': 'Bearer ' + token
+        },
+        method: 'GET'
+
+    })
+        .then(checkStatus);
+
+
 export const getStats = (email) =>
     fetch('/api/v1/userStats/'+ email , {
              headers: {
