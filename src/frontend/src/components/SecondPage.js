@@ -1,6 +1,6 @@
-import { Table, Tag, Button, Radio } from 'antd';
+import { Table, Tag, Button, Radio, Input } from 'antd';
 import { useState, useEffect } from 'react';
-import { getAllAliments, deleteAliment } from './api.js';
+import { getAllAliments, deleteAliment, getAllAlimentsByKeyword } from './api.js';
 import { PlusOutlined } from '@ant-design/icons';
 import AlimentsDrawerForm from './AlimentsDrawerForm';
 import UserAlimentsDrawerForm from './UserAlimentsDrawerForm';
@@ -16,6 +16,8 @@ function SecondPage ({secondPage, email}) {
     const [showAlimentsDrawer, setShowAlimentsDrawer] = useState(false);
     const [showUserAlimentsDrawer, setShowUserAlimentsDrawer] = useState(false);
     const [alimentName, setAlimentName] = useState();
+    const { Search } = Input;
+    const onSearch = (value, _e, info) => (value !== "") ? fetchAllAlimentsByKeyword(value) : fetchAllAliments();
 
     const removeAliment = (alimentName) =>
             deleteAliment(alimentName)
@@ -108,6 +110,21 @@ function SecondPage ({secondPage, email}) {
                                                           })
                                                           });
 
+    const fetchAllAlimentsByKeyword = (keyword) =>
+
+            getAllAlimentsByKeyword(keyword)
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                    setAliments(data);
+
+                }).catch((err) => {
+                                                              //var status = err.response.status;
+                                                              err.response.json().then((res) => {
+                                                                    errorNotificationWithIcon("There was an issue", `${res.message} [${err.response.status}] [${res.httpStatus}]`);
+                                                              })
+                                                              });
+
 
 
 
@@ -124,6 +141,7 @@ function SecondPage ({secondPage, email}) {
 
     if (secondPage) {
         return <>
+        <Search placeholder="input search text" onSearch={onSearch} enterButton />
         <AlimentsDrawerForm showAlimentsDrawer = {showAlimentsDrawer} setShowAlimentsDrawer = {setShowAlimentsDrawer} fetchAllAliments = {fetchAllAliments}/>
         <UserAlimentsDrawerForm showUserAlimentsDrawer = {showUserAlimentsDrawer} setShowUserAlimentsDrawer = {setShowUserAlimentsDrawer} userName = {email} alimentName = {alimentName}/>
         <Table dataSource={aliments} columns={columns} bordered title= {() => <div><Button  onClick={() => setShowAlimentsDrawer(!showAlimentsDrawer)} type="primary" shape="round" icon = {<PlusOutlined />}  size="small">
