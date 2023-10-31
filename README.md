@@ -19,7 +19,7 @@ Contents of the readme file:
 
 AWS link of the calories calculator application:
 
-http://calories-calculator-env.eba-zsinpz63.us-east-1.elasticbeanstalk.com/
+http://calories-calculator.us-east-1.elasticbeanstalk.com/
 
 DockerHub image link
 
