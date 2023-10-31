@@ -57,4 +57,11 @@ public class AlimentsService {
             throw new NotFoundException(("Aliment doesn't exist"));
         });
     }
+
+    public List<AlimentsDto> getAlimentsThatContainsKeyWord(String keyword) {
+        return alimentsRepository.getAllAlimentsLike(keyword)
+                .stream()
+                .map(alimentsDtoMapper)
+                .collect(Collectors.toList());
+    }
 }

@@ -1,5 +1,5 @@
 import { Layout, Menu, Button } from 'antd';
-import {useState} from 'react';
+import { useState } from 'react';
 import SignInForm from './SignInForm';
 import SignUpForm from './SignUpForm';
 

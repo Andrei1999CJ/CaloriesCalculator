@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -20,4 +21,7 @@ public interface AlimentsRepository extends JpaRepository<Aliments, Long> {
 
     @Query(value = "SELECT u.id FROM Aliments u WHERE u.name = ?1")
     Optional<Long> getAlimentIdByName(String name);
+
+    @Query(value = "SELECT * FROM aliments WHERE name ILIKE %?1%", nativeQuery = true)
+    List<Aliments> getAllAlimentsLike(String keyword);
 }
