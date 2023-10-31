@@ -17,8 +17,8 @@ env:
   DOCKER_HUB_USERNAME: andrei1999cj
   # AWS & Elastic Bean Stalk
   AWS_REGION: us-east-1
-  EB_ENVIRONMENT_NAME: Calories-Calculator-env
-  EB_APPLICATION_NAME: calories-calculator
+  EB_ENVIRONMENT_NAME: CaloriesCalculator-env
+  EB_APPLICATION_NAME: Calories_Calculator
   EB_DEPLOYMENT_PACKAGE: src/main/resources/docker-compose.yml
 
 jobs:
@@ -113,7 +113,7 @@ jobs:
         with:
           status: ${{ job.status }}
           fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
-          text: ':tada: :arrow_right: http://calories-calculator-env.eba-zsinpz63.us-east-1.elasticbeanstalk.com/'
+          text: ':tada: :arrow_right: http://calories-calculator.us-east-1.elasticbeanstalk.com/'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: always()
